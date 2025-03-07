@@ -1,0 +1,173 @@
+<?php
+loadPartial("head");
+loadPartial("navbar");
+//inspectAndDie($product);
+?>
+
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="/">home</a></li>
+                            <li><?= $product->name ?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--breadcrumbs area end-->
+
+    <!--product details start-->
+    <div class="product_details mt-60 mb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product-details-tab">
+                        <div id="img-1" class="zoomWrapper single-zoom">
+                            <a href="#">
+                                <img id="zoom1" src="/assets/img/product/<?= explode(",",$product->images)[0] ?>.jpg" data-zoom-image="/assets/img/product/<?= explode(",",$product->images)[0] ?>.jpg" alt="<?= explode(",",$product->images_alt)[0] ?>">
+                            </a>
+                        </div>
+                        <div class="single-zoom-thumb">
+                            <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+
+                                <?php
+                                        $images = explode(",",$product->images);
+                                        for ($i = 0; $i < count($images); $i++):
+                                        $image = $images[$i];
+                                        $alt = explode(",",$product->images_alt)[$i];
+                                        ?>
+                                <li>
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="/assets/img/product/<?= $image ?>.jpg" data-zoom-image="/assets/img/product/<?= $image ?>.jpg">
+                                        <img src="/assets/img/product/<?= $image ?>.jpg" alt="<?= $alt ?>">
+                                    </a>
+                                </li>
+                                <?php endfor; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product_d_right">
+                        <form action="#">
+
+                            <h1><?= $product->name ?></h1>
+                            </div>
+                            <div class="price_box">
+                                <span class="current_price">$<?= (int)$product->price; ?></span>
+                                <?php if($product->discount > 0): ?>
+                                <span class="old_price">$<?= (int) ($product->price +  ($product->price * ($product->discount / 100))); ?></span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product_desc">
+                                <ul>
+                                    <li>In Stock</li>
+                                </ul>
+                                <p><?= $product->description ?></p>
+                            </div>
+                            <div class="product_variant quantity">
+                                <label>quantity</label>
+                                <input min="1" max="100" value="1" type="number">
+                                <button class="button" type="submit">add to cart</button>
+
+                            </div>
+                            <div class=" product_d_action">
+                                <ul>
+                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
+                                </ul>
+                            </div>
+                            <div class="product_meta">
+                                <span>Category: <a href="#"><?= $product->category ?></a></span>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--product details end-->
+
+    <!--product info start-->
+    <div class="product_d_info mb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_d_inner">
+                        <div class="product_info_button">
+                            <ul class="nav" role="tablist">
+                                <li>
+                                    <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews (1)</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+
+
+                            <div class="tab-pane fade show active" id="reviews" role="tabpanel" >
+                                <div class="reviews_wrapper">
+<!--                                    <h2>1 review for Donec eu furniture</h2>-->
+                                    <div class="reviews_comment_box">
+                                        <div class="comment_thmb">
+                                            <img src="assets/img/blog/comment2.jpg" alt="">
+                                        </div>
+                                        <div class="comment_text">
+                                            <div class="reviews_meta">
+                                                <div class="star_rating">
+                                                    <ul>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <p><strong>admin </strong>- September 12, 2018</p>
+                                                <span>roadthemes</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="comment_title">
+                                        <h2>Add a review </h2>
+                                        <p>Your email address will not be published.  Required fields are marked </p>
+                                    </div>
+                                    <div class="product_ratting mb-10">
+                                        <h3>Your rating</h3>
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product_review_form">
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="review_comment">Your review </label>
+                                                    <textarea name="comment" id="review_comment" ></textarea>
+                                                </div>
+                                            </div>
+                                            <button type="submit">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--product info end-->
+
+
+<?php loadPartial("footer"); ?>
