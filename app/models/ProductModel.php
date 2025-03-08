@@ -14,45 +14,6 @@ class ProductModel
         $this->db = Database::getInstance($config)->getConnection();
     }
 
-//    public function getProductsPaginated(int $page = 1, int $limit = 10): array
-//    {
-//        $offset = ($page - 1) * $limit;
-//        $query = 'SELECT * FROM Products ORDER BY created_at DESC LIMIT :limit OFFSET :offset';
-//        $products = $this->db->query( $query,
-//        [
-//            'limit' => $limit,
-//            'offset' => $offset
-//        ]
-//        )->fetchAll();
-//        return $products;
-//    }
-//
-//    public function getHomeProducts(int $limit = 3): array
-//    {
-//        $query = '
-//        SELECT
-//            p.product_id,
-//            p.name,
-//            p.price,
-//            c.name AS category,
-//            GROUP_CONCAT(pi.image_url) AS images
-//        FROM Products p
-//        LEFT JOIN ProductImages pi ON p.product_id = pi.product_id
-//        LEFT JOIN Categories c ON p.category_id = c.category_id
-//        GROUP BY p.product_id
-//        ORDER BY p.created_at DESC
-//        LIMIT :limit
-//        ';
-//        $products = $this->db->query($query,
-//            [
-//                'limit' => $limit
-//            ]
-//        )->fetchAll();
-//        inspectAndDie($products);
-//        return $products;
-//    }
-
-
     private function fetchProducts(int $limit, int $offset = 0): array
     {
         $query = '
@@ -114,5 +75,35 @@ class ProductModel
     public function getAllProductsCount()
     {
         return $this->db->query('SELECT COUNT(*) AS count FROM Products')->fetch()->count;
+    }
+
+    public function getLastProductId(){
+        return $this->db->query('SELECT MAX(product_id) AS last_id FROM Products')->fetch()->last_id;
+    }
+
+    public function createProduct($data, $images) {
+        $query = 'INSERT INTO Products (name, description, price, discount_percentage, quantity, category_id) VALUES (:name, :description, :price, :discount, :quantity, :category)';
+        $this->db->query($query, $data);
+    }
+
+    public function updateProduct($product_id, $data) {
+        $query = 'UPDATE Products SET name = :name, description = :description, price = :price, discount_percentage = :discount, quantity = :quantity, category_id = :category WHERE product_id = :product_id';
+        $this->db->query($query, array_merge($data, ['product_id' => $product_id]));
+    }
+
+    public function addProductImage($images)
+    {
+        $query = 'INSERT INTO ProductImages (product_id, image_url, alt_text) VALUES (:product_id, :image_url, :alt_text)';
+        $this->db->query($query, $images);
+    }
+
+    public function deleteProductImages($product_id) {
+        $query = 'DELETE FROM ProductImages WHERE product_id = :product_id';
+        $this->db->query($query, ['product_id' => $product_id]);
+    }
+
+    public function deleteProduct($product_id) {
+        $query = 'DELETE FROM Products WHERE product_id = :product_id';
+        $this->db->query($query, ['product_id' => $product_id]);
     }
 }

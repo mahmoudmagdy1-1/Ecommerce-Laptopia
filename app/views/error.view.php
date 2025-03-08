@@ -10,7 +10,7 @@ loadPartial("navbar");
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index-2.html">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li>404</li>
                     </ul>
                 </div>

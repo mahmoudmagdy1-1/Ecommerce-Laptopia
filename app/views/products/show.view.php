@@ -29,7 +29,7 @@ loadPartial("navbar");
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#">
-                                <img id="zoom1" src="/assets/img/product/<?= explode(",",$product->images)[0] ?>.jpg" data-zoom-image="/assets/img/product/<?= explode(",",$product->images)[0] ?>.jpg" alt="<?= explode(",",$product->images_alt)[0] ?>">
+                                <img id="zoom1" src="/assets/img/product/<?= explode(",",$product->images)[0] ?>" data-zoom-image="/assets/img/product/<?= explode(",",$product->images)[0] ?>" alt="<?= explode(",",$product->images_alt)[0] ?>">
                             </a>
                         </div>
                         <div class="single-zoom-thumb">
@@ -42,8 +42,8 @@ loadPartial("navbar");
                                         $alt = explode(",",$product->images_alt)[$i];
                                         ?>
                                 <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="/assets/img/product/<?= $image ?>.jpg" data-zoom-image="/assets/img/product/<?= $image ?>.jpg">
-                                        <img src="/assets/img/product/<?= $image ?>.jpg" alt="<?= $alt ?>">
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="/assets/img/product/<?= $image ?>" data-zoom-image="/assets/img/product/<?= $image ?>">
+                                        <img src="/assets/img/product/<?= $image ?>" alt="<?= $alt ?>">
                                     </a>
                                 </li>
                                 <?php endfor; ?>
@@ -57,12 +57,14 @@ loadPartial("navbar");
 
                             <h1><?= $product->name ?></h1>
                             </div>
-                            <div class="price_box">
-                                <span class="current_price">$<?= (int)$product->price; ?></span>
-                                <?php if($product->discount > 0): ?>
-                                <span class="old_price">$<?= (int) ($product->price +  ($product->price * ($product->discount / 100))); ?></span>
-                                <?php endif; ?>
-                            </div>
+                                <div class="price_box">
+                                    <?php if ($product->discount > 0): ?>
+                                        <span class="current_price">$<?= (int)($product->price - ($product->price * ($product->discount / 100))) ?></span>
+                                        <span class="old_price">$<?= (int)$product->price ?></span>
+                                    <?php else: ?>
+                                        <span class="current_price">$<?= (int)$product->price ?></span>
+                                    <?php endif; ?>
+                                </div>
                             <div class="product_desc">
                                 <ul>
                                     <li>In Stock</li>
@@ -73,7 +75,6 @@ loadPartial("navbar");
                                 <label>quantity</label>
                                 <input min="1" max="100" value="1" type="number">
                                 <button class="button" type="submit">add to cart</button>
-
                             </div>
                             <div class=" product_d_action">
                                 <ul>
@@ -86,7 +87,12 @@ loadPartial("navbar");
 
                         </form>
 
-
+                    <form action="/product/delete/<?= $product_id ?>" method="post">
+                        <div class="product_variant quantity">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="button" type="submit">Delete Product</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -115,7 +121,7 @@ loadPartial("navbar");
 <!--                                    <h2>1 review for Donec eu furniture</h2>-->
                                     <div class="reviews_comment_box">
                                         <div class="comment_thmb">
-                                            <img src="assets/img/blog/comment2.jpg" alt="">
+                                            <img src="assets/img/blog/comment2" alt="">
                                         </div>
                                         <div class="comment_text">
                                             <div class="reviews_meta">

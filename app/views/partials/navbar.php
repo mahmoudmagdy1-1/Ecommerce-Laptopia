@@ -98,7 +98,7 @@
                                 <a href="/">Home</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="product-details.html">product</a>
+                                <a href="/products">product</a>
                             </li>
                             <li class="menu-item-has-children">
                                 <a href="#">pages </a>

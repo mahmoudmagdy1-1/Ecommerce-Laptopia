@@ -39,7 +39,7 @@ class Database
     public function query($query, $params = [])
     {
         try{
-        $stmt = $this->conn->prepare( $query);
+        $stmt = $this->conn->prepare($query);
         foreach ($params as $param => $value) {
 //            inspectAndDie($query);
             $stmt->bindValue(':' . $param, $value);

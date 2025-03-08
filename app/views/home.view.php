@@ -14,7 +14,7 @@ loadPartial("navbar");
                                 <h1>Next level of Laptops</h1>
                                 <h2>Insane Quality for use</h2>
                                 <p>Special offer <span> 20% off </span> this week</p>
-                                <a class="button" href="product-details.html">Buy now</a>
+                                <a class="button" href="/products">Buy now</a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
@@ -34,7 +34,7 @@ loadPartial("navbar");
                                 <h1>Best Hardware Included</h1>
                                 <h2>100% Flexible</h2>
                                 <p>exclusive offer <span> 20% off </span> this week</p>
-                                <a class="button" href="product-details.html">Shop now</a>
+                                <a class="button" href="/products">Shop now</a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
@@ -53,7 +53,7 @@ loadPartial("navbar");
                                 <h1>With some gifts</h1>
                                 <h2>Special one for you</h2>
                                 <p>exclusive offer <span> 20% off </span> this week</p>
-                                <a class="button" href="product-details.html">shopping now</a>
+                                <a class="button" href="/products">shopping now</a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
@@ -89,7 +89,7 @@ loadPartial("navbar");
                             <?php //= $products->product_id; ?><!--"></form>-->
                             <a href="/product/<?= $product->product_id; ?>">
                                 <div class="tranding-pro-img">
-                                    <img src="/assets/img/product/<?= explode(",", $product->images)[0] ?>.jpg"
+                                    <img src="/assets/img/product/<?= explode(",", $product->images)[0] ?>"
                                          alt="<?= explode(",", $product->images_alt)[0] ?>">
                                 </div>
                                 <div class="tranding-pro-title">
@@ -98,10 +98,13 @@ loadPartial("navbar");
                                 </div>
                                 <div class="tranding-pro-price">
                                     <div class="price_box">
-                                        <span class="current_price">$<?= (int)$product->price; ?></span>
                                         <?php if ($product->discount > 0): ?>
-                                            <span class="old_price">$<?= (int)($product->price + ($product->price * ($product->discount / 100))); ?></span>
-                                        <?php endif; ?>                                    </div>
+                                        <span class="current_price">$<?= (int)($product->price - ($product->price * ($product->discount / 100))) ?></span>
+                                        <span class="old_price">$<?= (int)$product->price ?></span>
+                                        <?php else: ?>
+                                        <span class="current_price">$<?= (int)$product->price ?></span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </a>
                         </div>

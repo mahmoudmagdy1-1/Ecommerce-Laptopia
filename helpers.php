@@ -37,3 +37,8 @@ function inspectAndDie($variable) : void
 function redirect($route) : void{
     header("Location : {$route}");
 }
+
+function sanitize($value)
+{
+    return htmlspecialchars(trim($value));
+}
