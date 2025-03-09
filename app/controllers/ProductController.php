@@ -3,7 +3,9 @@
 namespace App\controllers;
 
 use Core\Database;
+use Core\Session;
 use Core\Validation;
+use Core\Flash;
 use App\models\ProductModel;
 use App\models\CategoryModel;
 
@@ -21,7 +23,6 @@ class ProductController
 
     public function index($params)
     {
-        $this->productModel->getAllProductsCount();
         extract($params);
         $product_count = $this->productModel->getAllProductsCount();
         $products_per_page = 9;
@@ -29,10 +30,10 @@ class ProductController
         if (!isset($id)) {
             $id = 1;
         }
-        $products = $this->productModel->getProductsPage($id, $products_per_page);
-        if (!$products) {
-            ErrorController::notFound("Products not found");
+        if ($id > $max_page_count) {
+            ErrorController::notFound("Page not found");
         } else {
+            $products = $this->productModel->getProductsPage($id, $products_per_page);
             loadView('products/index',
                 [
                     'products' => $products,
@@ -82,7 +83,7 @@ class ProductController
     public function processProductData($params)
     {
         // If editing, use the product ID from the params, otherwise it's a new product
-        $product_id = isset($params['id']) ? $params['id'] : null;
+        $product_id = isset($params['id']) ?? $params['id'];
 
         // Define required fields
         $requiredFields = [
@@ -114,7 +115,7 @@ class ProductController
         }
 
         if (!Validation::intVal($data["price"], 1)) {
-            $errors["price"] = "Price must be greater than 0";
+            $errors["price"] = "Price is required and must be greater than 0";
         }
         if (!Validation::intVal($data["quantity"], 1)) {
             $errors["quantity"] = "Quantity must be greater than 0";
@@ -122,15 +123,14 @@ class ProductController
         if (!Validation::intVal($data["discount"], 0, 100)) {
             $errors["discount"] = "Discount must be between 0 and 100";
         }
-        if (!Validation::string($data["name"], 1, 100)) {
+        if (!Validation::string($data["name"], 0, 100)) {
             $errors["name"] = "Name must be between 1 and 100 characters";
         }
-        if (!Validation::string($data["description"], 1, 1000)) {
-            $errors["description"] = "Description must be at most 1000 characters";
+        if (!Validation::string($data["description"], 0, 1000)) {
+            Flash::set(Flash::ERROR, "Description must be at most 1000 characters");
         }
 
-        // Handle image uploads if there are any
-        if (isset($_FILES["images"])) {
+        if (count(array_filter($_FILES["images"]["name"])) > 0) {
             $allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
             foreach ($_FILES["images"]["error"] as $key => $error) {
                 if ($error == UPLOAD_ERR_OK) {
@@ -146,12 +146,10 @@ class ProductController
                 }
             }
         } else {
-            // If no images were uploaded, it's required for new products
-            if ($product_id === null) {
+            if (!$product_id) {
                 $errors["image"] = "At least 1 image is required";
             }
         }
-
         return [
             'data' => $data,
             'errors' => $errors,
@@ -167,13 +165,11 @@ class ProductController
         $data = $result['data'];
         $errors = $result['errors'];
         $images = $result['images'];
-
-        // If there are errors, show the form again with error messages
         if (!empty($errors)) {
-            loadView('products/add', [
-                'errors' => $errors,
-                'data' => $data
-            ]);
+            foreach ($errors as $error => $message) {
+                Flash::set(Flash::ERROR, $message);
+            }
+            redirect("/product/add");
         } else {
             // Create the product and associate the images
             $this->productModel->createProduct($data, $images);
@@ -189,7 +185,7 @@ class ProductController
             }
 
             // Redirect to the newly created product page
-            header("Location: /product/$new_id");
+            redirect("/product/$new_id");
         }
     }
 
@@ -239,7 +235,7 @@ class ProductController
             }
 
             // Redirect to the updated product page
-            header("Location: /product/$product_id");
+            redirect("/product/$product_id");
         }
     }
 
@@ -250,6 +246,6 @@ class ProductController
         $this->productModel->deleteProductImages($product_id);
         $this->productModel->deleteProduct($product_id);
 
-        header("Location: /products");
+        redirect('/products');
     }
 }

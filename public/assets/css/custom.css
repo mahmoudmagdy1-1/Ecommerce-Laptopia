@@ -1163,4 +1163,32 @@ iframe {
 }
 
 
+/* flash message */
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+/* logout button */
+
+.logout-button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.logout-button:hover,
+.logout-button:focus
+{
+    color: #20c997;
+}
+
 

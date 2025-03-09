@@ -16,11 +16,17 @@ function loadView($name, $data = []) : void
     }
 }
 
-function loadPartial($name) : void
+function loadPartial($name, $data = []) : void
 {
-    require basePath("app/views/partials/{$name}.php");
-}
+    $viewPath = basePath("app/views/partials/{$name}.php");
 
+    if (file_exists($viewPath)) {
+        extract($data);
+        require $viewPath;
+    } else {
+        echo "View '{$name} not found!'";
+    }
+}
 function inspect($variable) : void
 {
     echo "<pre>";
@@ -35,7 +41,7 @@ function inspectAndDie($variable) : void
 }
 
 function redirect($route) : void{
-    header("Location : {$route}");
+    header("Location: {$route}");
 }
 
 function sanitize($value)

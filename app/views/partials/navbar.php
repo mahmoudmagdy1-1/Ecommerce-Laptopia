@@ -21,7 +21,7 @@
                     </div>
                     <div class="top_right text-right">
                         <ul>
-                            <li><a href="my-account.html"> My Account </a></li>
+                            <li><a href="/login"> My Account </a></li>
                             <li><a href="checkout.html"> Checkout </a></li>
                         </ul>
                     </div>
@@ -124,7 +124,7 @@
                                 </ul>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="login.html">my account</a>
+                                <a href="/login">my account</a>
                             </li>
                             <li class="menu-item-has-children">
                                 <a href="contact.html"> Contact Us</a>
@@ -163,7 +163,15 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="top_right text-right">
                             <ul>
-                                <li><a href="my-account.html">Account</a></li>
+                                <?php
+                                    if (\Core\Session::has('user')) :
+                                ?>
+                                    <li><a href="/profile"><?= \Core\Session::get('user')['name'] ?></a></li>
+                                    <li><form method="post" action="/logout"><button class="logout-button">Logout</button></form></li>
+                                <?php else: ?>
+                                <li><a href="/login">Login</a></li>
+                                <li><a href="/register">Register</a></li>
+                                <?php endif; ?>
                                 <li><a href="checkout.html">Checkout</a></li>
                             </ul>
                         </div>
@@ -193,7 +201,11 @@
                             </div>
                             <div class="middel_right_info">
                                 <div class="header_wishlist">
-                                    <a href="#"><img src="/assets/img/user.png" alt=""></a>
+                                    <?php if (\Core\Session::has('user')): ?>
+                                    <a href="/profile"><img src="/assets/img/user.png" alt=""></a>
+                                    <?php else: ?>
+                                    <a href="/login"><img src="/assets/img/user.png" alt=""></a>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="mini_cart_wrapper">
                                     <a href="javascript:void(0)"><img src="/assets/img/shopping-bag.png" alt=""></a>

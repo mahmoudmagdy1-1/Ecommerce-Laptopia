@@ -8,12 +8,7 @@ loadPartial("navbar");
 <div class="form-wrapper">
     <div class="form-container">
         <h2>Edit Product</h2>
-        <?php
-        if(isset($errors)) {
-
-            inspectAndDie($errors);
-        }
-        ?>
+        <?php loadPartial('errors'); ?>
         <form action="/product/edit/<?= $product_id ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">

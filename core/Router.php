@@ -8,7 +8,7 @@ class Router
 {
     private array $routes = [];
 
-    public function register_route($method, $uri, $action)
+    public function register_route($method, $uri, $action, $middleware = null)
     {
         list($controller, $controllerMethod) = explode("@", $action);
         $this->routes[] = [
@@ -16,27 +16,28 @@ class Router
             'uri' => $uri,
             'controller' => $controller,
             'controllerMethod' => $controllerMethod,
+            'middleware' => $middleware
         ];
     }
 
-    public function get($uri, $action)
+    public function get($uri, $action, $middleware = null)
     {
-        $this->register_route('GET', $uri, $action);
+        $this->register_route('GET', $uri, $action, $middleware);
     }
 
-    public function put($uri, $action)
+    public function put($uri, $action, $middleware = null)
     {
-        $this->register_route('PUT', $uri, $action);
+        $this->register_route('PUT', $uri, $action, $middleware);
     }
 
-    public function post($uri, $action)
+    public function post($uri, $action, $middleware = null)
     {
-        $this->register_route('POST', $uri, $action);
+        $this->register_route('POST', $uri, $action, $middleware);
     }
 
-    public function delete($uri, $action)
+    public function delete($uri, $action, $middleware = null)
     {
-        $this->register_route('DELETE', $uri, $action);
+        $this->register_route('DELETE', $uri, $action, $middleware);
     }
 
     public function route($uri)
@@ -75,18 +76,16 @@ class Router
                 }
                 // If a match was found, process middleware and dispatch the controller
                 if ($matched) {
-//                    if (isset($route['middleware']) && is_array($route['middleware'])) {
-//                        foreach ($route['middleware'] as $middleware) {
-//                            (new Authorize())->handle($middleware);
-//                        }
-//                    }
+//                    inspectAndDie(Session::get('user'));
+//                    inspectAndDie($route['middleware']);
+                    if (isset($route['middleware']) && is_array($route['middleware'])) {
+                            (new Authorize())->handle($route['middleware']);
+                    }
 //                    foreach(get_declared_classes() as $name){
 //                        inspect($name);
 //                    }
                     $controllerClass = 'App\\controllers\\' . $route['controller'];
-//                    inspectAndDie($controllerClass);
                     $controllerMethod = $route['controllerMethod'];
-
                     $controllerInstance = new $controllerClass();
                     $controllerInstance->$controllerMethod($params);
                     return;

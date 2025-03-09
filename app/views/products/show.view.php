@@ -29,23 +29,27 @@ loadPartial("navbar");
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#">
-                                <img id="zoom1" src="/assets/img/product/<?= explode(",",$product->images)[0] ?>" data-zoom-image="/assets/img/product/<?= explode(",",$product->images)[0] ?>" alt="<?= explode(",",$product->images_alt)[0] ?>">
+                                <img id="zoom1" src="/assets/img/product/<?= explode(",", $product->images)[0] ?>"
+                                     data-zoom-image="/assets/img/product/<?= explode(",", $product->images)[0] ?>"
+                                     alt="<?= explode(",", $product->images_alt)[0] ?>">
                             </a>
                         </div>
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
 
                                 <?php
-                                        $images = explode(",",$product->images);
-                                        for ($i = 0; $i < count($images); $i++):
-                                        $image = $images[$i];
-                                        $alt = explode(",",$product->images_alt)[$i];
-                                        ?>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="/assets/img/product/<?= $image ?>" data-zoom-image="/assets/img/product/<?= $image ?>">
-                                        <img src="/assets/img/product/<?= $image ?>" alt="<?= $alt ?>">
-                                    </a>
-                                </li>
+                                $images = explode(",", $product->images);
+                                for ($i = 0; $i < count($images); $i++):
+                                    $image = $images[$i];
+                                    $alt = explode(",", $product->images_alt)[$i];
+                                    ?>
+                                    <li>
+                                        <a href="#" class="elevatezoom-gallery active" data-update=""
+                                           data-image="/assets/img/product/<?= $image ?>"
+                                           data-zoom-image="/assets/img/product/<?= $image ?>">
+                                            <img src="/assets/img/product/<?= $image ?>" alt="<?= $alt ?>">
+                                        </a>
+                                    </li>
                                 <?php endfor; ?>
                             </ul>
                         </div>
@@ -56,47 +60,51 @@ loadPartial("navbar");
                         <form action="#">
 
                             <h1><?= $product->name ?></h1>
-                            </div>
-                                <div class="price_box">
-                                    <?php if ($product->discount > 0): ?>
-                                        <span class="current_price">$<?= (int)($product->price - ($product->price * ($product->discount / 100))) ?></span>
-                                        <span class="old_price">$<?= (int)$product->price ?></span>
-                                    <?php else: ?>
-                                        <span class="current_price">$<?= (int)$product->price ?></span>
-                                    <?php endif; ?>
-                                </div>
-                            <div class="product_desc">
-                                <ul>
-                                    <li>In Stock</li>
-                                </ul>
-                                <p><?= $product->description ?></p>
-                            </div>
-                            <div class="product_variant quantity">
-                                <label>quantity</label>
-                                <input min="1" max="100" value="1" type="number">
-                                <button class="button" type="submit">add to cart</button>
-                            </div>
-                            <div class=" product_d_action">
-                                <ul>
-                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                </ul>
-                            </div>
-                            <div class="product_meta">
-                                <span>Category: <a href="#"><?= $product->category ?></a></span>
-                            </div>
-
-                        </form>
-
-                    <form action="/product/delete/<?= $product_id ?>" method="post">
-                        <div class="product_variant quantity">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button class="button" type="submit">Delete Product</button>
-                        </div>
-                    </form>
                     </div>
+                    <div class="price_box">
+                        <?php if ($product->discount > 0): ?>
+                            <span class="current_price">$<?= (int)($product->price - ($product->price * ($product->discount / 100))) ?></span>
+                            <span class="old_price">$<?= (int)$product->price ?></span>
+                        <?php else: ?>
+                            <span class="current_price">$<?= (int)$product->price ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="product_desc">
+                        <ul>
+                            <li>In Stock</li>
+                        </ul>
+                        <p><?= $product->description ?></p>
+                    </div>
+                    <div class="product_variant quantity">
+                        <label>quantity</label>
+                        <input min="1" max="100" value="1" type="number">
+                        <button class="button" type="submit">add to cart</button>
+                    </div>
+                    <div class=" product_d_action">
+                        <ul>
+                            <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
+                        </ul>
+                    </div>
+                    <div class="product_meta">
+                        <span>Category: <a href="#"><?= $product->category ?></a></span>
+                    </div>
+
+                    </form>
+
+                    <?php
+                    if (\Core\Session::has('user') && \Core\Session::get('user')['role'] == 'admin'):
+                        ?>
+                        <form action="/product/delete/<?= $product_id ?>" method="post">
+                            <div class="product_variant quantity">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="button" type="submit">Delete Product</button>
+                            </div>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!--product details end-->
 
@@ -109,16 +117,17 @@ loadPartial("navbar");
                         <div class="product_info_button">
                             <ul class="nav" role="tablist">
                                 <li>
-                                    <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews (1)</a>
+                                    <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
+                                       aria-selected="false">Reviews (1)</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="tab-content">
 
 
-                            <div class="tab-pane fade show active" id="reviews" role="tabpanel" >
+                            <div class="tab-pane fade show active" id="reviews" role="tabpanel">
                                 <div class="reviews_wrapper">
-<!--                                    <h2>1 review for Donec eu furniture</h2>-->
+                                    <!--                                    <h2>1 review for Donec eu furniture</h2>-->
                                     <div class="reviews_comment_box">
                                         <div class="comment_thmb">
                                             <img src="assets/img/blog/comment2" alt="">
@@ -142,7 +151,7 @@ loadPartial("navbar");
                                     </div>
                                     <div class="comment_title">
                                         <h2>Add a review </h2>
-                                        <p>Your email address will not be published.  Required fields are marked </p>
+                                        <p>Your email address will not be published. Required fields are marked </p>
                                     </div>
                                     <div class="product_ratting mb-10">
                                         <h3>Your rating</h3>
@@ -159,7 +168,7 @@ loadPartial("navbar");
                                             <div class="row">
                                                 <div class="col-12">
                                                     <label for="review_comment">Your review </label>
-                                                    <textarea name="comment" id="review_comment" ></textarea>
+                                                    <textarea name="comment" id="review_comment"></textarea>
                                                 </div>
                                             </div>
                                             <button type="submit">Submit</button>

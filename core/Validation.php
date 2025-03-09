@@ -16,6 +16,10 @@ class Validation{
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
+    public static function phone($value){
+
+    }
+
     public static function sanitize($value)
     {
         return htmlspecialchars(trim($value));

@@ -4,6 +4,7 @@ loadPartial("navbar");
 ?>
 
     <!--slider area start-->
+    <?php loadPartial("success"); ?>
     <section class="slider_section d-flex align-items-center">
         <div class="slider_area owl-carousel">
             <div class="single_slider d-flex align-items-center">
