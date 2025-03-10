@@ -1,7 +1,8 @@
 <?php
 
 
-Namespace Core;
+namespace Core;
+
 use PDO;
 
 class Database
@@ -36,18 +37,18 @@ class Database
     {
         return $this;
     }
+
     public function query($query, $params = [])
     {
-        try{
-        $stmt = $this->conn->prepare($query);
-        foreach ($params as $param => $value) {
+        try {
+            $stmt = $this->conn->prepare($query);
+            foreach ($params as $param => $value) {
 //            inspectAndDie($query);
-            $stmt->bindValue(':' . $param, $value);
-        }
-        $stmt->execute();
-        return $stmt;
-        }
-        catch (PDOException $e) {
+                $stmt->bindValue(':' . $param, $value);
+            }
+            $stmt->execute();
+            return $stmt;
+        } catch (PDOException $e) {
             echo "Query failed: " . $e->getMessage();
         }
     }

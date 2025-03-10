@@ -897,4 +897,4 @@ console.log("main");
     });
     
     
-})(jQuery);	
+})(jQuery);

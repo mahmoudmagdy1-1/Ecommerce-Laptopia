@@ -53,7 +53,8 @@ class ProductModel
     public function getProductByID($id)
     {
         $query = '
-        SELECT  
+        SELECT 
+            p.product_id,
             p.name,
             p.price,
             p.discount_percentage AS discount,

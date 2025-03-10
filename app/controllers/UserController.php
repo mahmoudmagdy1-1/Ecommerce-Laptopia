@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\models\UserModel;
+use App\models\CartModel;
 use Core\Flash;
 use Core\Session;
 use Core\Validation;
@@ -15,6 +16,7 @@ class UserController
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->cartModel = new CartModel();
     }
 
     public function index($params)
@@ -98,9 +100,12 @@ class UserController
             }
             redirect("/register");
         } else {
-            // Create the user in the database
             $this->userModel->createUser($data);
-//            $new_id = $this->userModel->getLastUserId();
+            $userID = $this->userModel->getLastUserId();
+            if(!$this->cartModel->getCartId($userID)){
+                $this->cartModel->createCart($userID);
+            }
+            $this->cartModel->mergeCart($userID);
             Session::set("user",
                 [
                     "id" => $this->userModel->getLastUserId(),
@@ -149,6 +154,10 @@ class UserController
                 "email" => $user->email,
                 "role" => $user->role
             ]);
+            if(!$this->cartModel->getCartId($user->user_id)){
+                $this->cartModel->createCart($user->user_id);
+            }
+            $this->cartModel->mergeCart($user->user_id);
             Flash::set(Flash::SUCCESS, "You are now logged in");
             redirect("/");
         } else {

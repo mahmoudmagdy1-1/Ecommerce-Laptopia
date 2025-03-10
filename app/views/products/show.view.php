@@ -21,6 +21,10 @@ loadPartial("navbar");
     </div>
     <!--breadcrumbs area end-->
 
+<?php
+loadPartial("errors");
+loadPartial("success");
+?>
     <!--product details start-->
     <div class="product_details mt-60 mb-60">
         <div class="container">
@@ -57,9 +61,8 @@ loadPartial("navbar");
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
-                        <form action="#">
 
-                            <h1><?= $product->name ?></h1>
+                        <h1><?= $product->name ?></h1>
                     </div>
                     <div class="price_box">
                         <?php if ($product->discount > 0): ?>
@@ -75,11 +78,14 @@ loadPartial("navbar");
                         </ul>
                         <p><?= $product->description ?></p>
                     </div>
-                    <div class="product_variant quantity">
-                        <label>quantity</label>
-                        <input min="1" max="100" value="1" type="number">
-                        <button class="button" type="submit">add to cart</button>
-                    </div>
+                    <form method="post" action="/cart/add">
+                        <div class="product_variant quantity">
+                            <label>quantity</label>
+                            <input type="hidden" name="product_id" value="<?= $product_id ?>">
+                            <input min="1" max="100" name="quantity" value="1" type="number">
+                            <button class="button" type="submit">add to cart</button>
+                        </div>
+                    </form>
                     <div class=" product_d_action">
                         <ul>
                             <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
@@ -89,7 +95,6 @@ loadPartial("navbar");
                         <span>Category: <a href="#"><?= $product->category ?></a></span>
                     </div>
 
-                    </form>
 
                     <?php
                     if (\Core\Session::has('user') && \Core\Session::get('user')['role'] == 'admin'):

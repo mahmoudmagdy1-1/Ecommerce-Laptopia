@@ -1,6 +1,6 @@
 <?php
 
-Namespace Core;
+namespace Core;
 
 class Session
 {
@@ -24,7 +24,7 @@ class Session
     {
         return $_SESSION[$key] ?? null;
     }
-    
+
     public static function delete($key)
     {
         unset($_SESSION[$key]);

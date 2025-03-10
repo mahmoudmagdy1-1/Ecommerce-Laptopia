@@ -2,6 +2,7 @@
 loadPartial("head");
 loadPartial("navbar");
 ?>
+
 <section class="pt-60 pb-30 gray-bg">
     <div class="container">
         <div class="row">

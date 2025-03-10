@@ -48,3 +48,24 @@ function sanitize($value)
 {
     return htmlspecialchars(trim($value));
 }
+
+function groupCartItems($cart) {
+    $result = [];
+
+    foreach ($cart as $item) {
+        $id = $item['product_id'];
+        $qty = (int)$item['quantity']; // convert to int
+
+        // If product_id not added yet, initialize it.
+        if (!isset($result[$id])) {
+            $result[$id] = [
+                'product_id' => $id,
+                'quantity' => 0,
+            ];
+        }
+
+        // Sum up the quantity.
+        $result[$id]['quantity'] += $qty;
+    }
+    return $result;
+}
