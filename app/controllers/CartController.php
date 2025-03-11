@@ -53,12 +53,12 @@ class CartController
         // Gather and sanitize required fields from POST.
         $requiredFields = ['product_id', 'quantity'];
         $data = [];
+        $errors = [];
         foreach ($requiredFields as $field) {
             $data[$field] = isset($_POST[$field]) ? sanitize($_POST[$field]) : null;
         }
 
         // Validate the input.
-        $errors = [];
         if (!Validation::intVal($data['quantity'], 1, 100)) {
             $errors[] = 'Quantity must be at least 1 and at most 100';
         }
@@ -130,13 +130,13 @@ class CartController
 // Gather and sanitize required fields from POST.
         $requiredFields = ['product_id', 'quantity'];
         $data = [];
+        $errors = [];
 //        inspectAndDie(Session::get('cart'));
         foreach ($requiredFields as $field) {
             $data[$field] = isset($_POST[$field]) ? sanitize($_POST[$field]) : null;
         }
 
         // Validate the input.
-        $errors = [];
         if (!Validation::intVal($data['quantity'], 1, 100)) {
             $errors[] = 'Quantity must be at least 1 and at most 100';
         }

@@ -99,7 +99,7 @@ loadPartial("success");
                     <?php
                     if (\Core\Session::has('user') && \Core\Session::get('user')['role'] == 'admin'):
                         ?>
-                        <form action="/product/delete/<?= $product_id ?>" method="post">
+
                             <div class="product_variant quantity">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button class="button" type="submit">Delete Product</button>

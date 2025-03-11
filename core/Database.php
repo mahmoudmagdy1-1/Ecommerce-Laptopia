@@ -4,6 +4,7 @@
 namespace Core;
 
 use PDO;
+use PDOException;
 
 class Database
 {
@@ -13,7 +14,10 @@ class Database
     private function __construct($config)
     {
         try {
-            $this->conn = new PDO("mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4", $config['username'], $config['password'],
+            $this->conn = new PDO(
+                "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4",
+                $config['username'],
+                $config['password'],
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
@@ -43,13 +47,43 @@ class Database
         try {
             $stmt = $this->conn->prepare($query);
             foreach ($params as $param => $value) {
-//            inspectAndDie($query);
+                //            inspectAndDie($query);
                 $stmt->bindValue(':' . $param, $value);
             }
             $stmt->execute();
             return $stmt;
         } catch (PDOException $e) {
-            echo "Query failed: " . $e->getMessage();
+            throw $e;
         }
+    }
+
+    /**
+     * Begin a transaction
+     * 
+     * @return bool
+     */
+    public function beginTransaction()
+    {
+        return $this->conn->beginTransaction();
+    }
+
+    /**
+     * Commit a transaction
+     * 
+     * @return bool
+     */
+    public function commit()
+    {
+        return $this->conn->commit();
+    }
+
+    /**
+     * Roll back a transaction
+     * 
+     * @return bool
+     */
+    public function rollBack()
+    {
+        return $this->conn->rollBack();
     }
 }

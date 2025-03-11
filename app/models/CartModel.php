@@ -119,4 +119,9 @@ class CartModel
         $query = 'SELECT * FROM CartItems WHERE cart_id = :cart_id';
         return $this->db->query($query, ['cart_id' => $cartId])->fetchAll();
     }
+    public function clearCart($userId)
+    {
+        $query = 'DELETE FROM CartItems WHERE cart_id = :cart_id';
+        $this->db->query($query, ['cart_id' => $this->getCartId($userId)]);
+    }
 }

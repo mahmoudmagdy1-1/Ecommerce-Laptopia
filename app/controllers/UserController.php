@@ -23,8 +23,8 @@ class UserController
     {
         $user_email = Session::get('user')['email'];
         $user = $this->userModel->getUserByEmail($user_email);
-//        inspectAndDie($user);
-        loadView('users/index',
+        loadView(
+            'users/index',
             [
                 'user' => $user
             ]
@@ -102,14 +102,16 @@ class UserController
         } else {
             $this->userModel->createUser($data);
             $userID = $this->userModel->getLastUserId();
-            if(!$this->cartModel->getCartId($userID)){
+            if (!$this->cartModel->getCartId($userID)) {
                 $this->cartModel->createCart($userID);
             }
             $this->cartModel->mergeCart($userID);
-            Session::set("user",
+            Session::set(
+                "user",
                 [
                     "id" => $this->userModel->getLastUserId(),
                     "name" => $data['name'],
+                    "email" => $data['email'],
                     "role" => "customer"
                 ]
             );
@@ -140,7 +142,6 @@ class UserController
             }
         }
 
-//        inspectAndDie($data);
         if (!Validation::email($data['email'])) {
             $errors['email'] = 'Email is invalid';
         }
@@ -154,7 +155,7 @@ class UserController
                 "email" => $user->email,
                 "role" => $user->role
             ]);
-            if(!$this->cartModel->getCartId($user->user_id)){
+            if (!$this->cartModel->getCartId($user->user_id)) {
                 $this->cartModel->createCart($user->user_id);
             }
             $this->cartModel->mergeCart($user->user_id);

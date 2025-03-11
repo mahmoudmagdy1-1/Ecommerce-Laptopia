@@ -50,12 +50,14 @@ loadPartial("success");
                             <tbody>
                             <?php
                             foreach ($cart as $items):
-                                if (isset($products[$items["product_id"]])) {
+                                if (isset($products[$items["product_id"]])){
                                     $product = $products[$items["product_id"]];
                                     $product_images = explode(",", $product->images);
-                                    $product_price = round($product->price - ($product->price * ($product->discount / 100)), 2);
-                                    $product_total = $product_price * $items["quantity"];
-                                }
+                                    $price = (float) $product->price;
+                                    $discount = (float) $product->discount;
+                                    $product_price = round($price - ($price * ($discount / 100)),2);
+                                    $product_total = round($product_price * (float) $items["quantity"],2);
+                                    }
                                 ?>
                                 <tr>
                                     <td class="product_thumb">
@@ -126,7 +128,7 @@ loadPartial("success");
                                 <p class="cart_amount">$<?= $cart_subtotal + $fixed_shipping ?></p>
                             </div>
                             <div class="checkout_btn">
-                                <a href="/checkout">Proceed to Checkout</a>
+                                <a href="<?= \Core\Session::has('user') ? '/checkout' : '/login' ?>">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>

@@ -15,30 +15,30 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="widgets_container widget_menu">
-                        <h3>Information</h3>
+                        <h3>My Account</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="blog.html">Delivery Information</a></li>
-                                <li><a href="contact.html">Privacy Policy</a></li>
-                                <li><a href="services.html">Terms & Conditions</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#">Gift Certificates</a></li>
+                                <?php if(\Core\Session::has('user')): ?>
+                                <li><a href="/profile">My Account</a></li>
+                                <?php else: ?>
+                                <li><a href="/login">Login</a></li>
+                                <li><a href="/register">Register</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="widgets_container widget_menu">
-                        <h3>My Account</h3>
+                        <h3>Information</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Order History</a></li>
-                                <li><a href="wishlist.html">Wish List</a></li>
-                                <li><a href="#">Newsletter</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="faq.html">International Orders</a></li>
+                                <li><a href="/profile">All Products</a></li>
+                                <li><a href="/orders">Cart</a></li>
+                                <?php if(\Core\Session::has('user')): ?>
+                                <li><a href="/orders">Checkout</a></li>
+                                <li><a href="/orders">Order History</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>

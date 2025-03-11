@@ -238,14 +238,4 @@ class ProductController
             redirect("/product/$product_id");
         }
     }
-
-    public function delete($params)
-    {
-        $product_id = $params['id'];
-
-        $this->productModel->deleteProductImages($product_id);
-        $this->productModel->deleteProduct($product_id);
-
-        redirect('/products');
-    }
 }
