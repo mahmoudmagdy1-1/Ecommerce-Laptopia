@@ -10,7 +10,7 @@ class ProductModel
 
     public function __construct()
     {
-        $config = require basePath('config/db.php');
+        $config = require basePath('config/_db.php');
         $this->db = Database::getInstance($config)->getConnection();
     }
 
@@ -23,8 +23,8 @@ class ProductModel
             p.price,
             p.discount_percentage AS discount,
             c.name AS category,
-            GROUP_CONCAT(pi.image_url) AS images,
-            GROUP_CONCAT(pi.alt_text) AS images_alt
+            GROUP_CONCAT(pi.image_url ORDER BY pi.product_image_id DESC) AS images,
+            GROUP_CONCAT(pi.alt_text ORDER BY pi.product_image_id DESC) AS images_alt
         FROM Products p
         LEFT JOIN ProductImages pi ON p.product_id = pi.product_id
         LEFT JOIN Categories c ON p.category_id = c.category_id
@@ -61,8 +61,8 @@ class ProductModel
             p.description,
             p.quantity,
             c.name AS category,
-            GROUP_CONCAT(pi.image_url) AS images,
-            GROUP_CONCAT(pi.alt_text) AS images_alt
+            GROUP_CONCAT(pi.image_url ORDER BY pi.product_image_id DESC) AS images,
+            GROUP_CONCAT(pi.alt_text ORDER BY pi.product_image_id DESC) AS images_alt
         FROM Products p
         LEFT JOIN ProductImages pi ON p.product_id = pi.product_id
         LEFT JOIN Categories c ON p.category_id = c.category_id
@@ -85,27 +85,15 @@ class ProductModel
 
     public function createProduct($data)
     {
-        $query = 'INSERT INTO Products (name, description, price, discount_percentage, quantity, category_id) VALUES (:name, :description, :price, :discount, :quantity, :category_id)';
+        $query = 'INSERT INTO Products (name, description, price, discount_percentage, quantity, category_id) VALUES (:name, :description, :price, :discount, :quantity, :category)';
         $this->db->query($query, $data);
         return $this->getLastProductId();
     }
 
-    public function updateProduct($product_id, $data)
+    public function updateProduct($data)
     {
-        $fields = [];
-        $params = ['product_id' => $product_id];
-
-        foreach ($data as $key => $value) {
-            if ($key !== 'product_id') {
-                $fields[] = "{$key} = :{$key}";
-                $params[$key] = $value;
-            }
-        }
-
-        $fieldsStr = implode(', ', $fields);
-        $query = "UPDATE Products SET {$fieldsStr} WHERE product_id = :product_id";
-
-        return $this->db->query($query, $params)->rowCount() > 0;
+        $query = 'UPDATE Products SET name = :name, description = :description, price = :price, discount_percentage = :discount, quantity = :quantity, category_id = :category WHERE product_id = :product_id';
+        $this->db->query($query, $data);
     }
 
     public function addProductImage($images)
@@ -140,7 +128,7 @@ class ProductModel
             p.discount_percentage AS discount,
             p.quantity,
             c.name AS category,
-            (SELECT image_url FROM ProductImages WHERE product_id = p.product_id LIMIT 1) AS image
+            (SELECT pi.image_url FROM ProductImages pi WHERE pi.product_id = p.product_id ORDER BY pi.product_image_id DESC LIMIT 1) AS image
         FROM Products p
         LEFT JOIN Categories c ON p.category_id = c.category_id
         ORDER BY p.created_at DESC';
@@ -152,22 +140,5 @@ class ProductModel
     {
         $query = 'SELECT COUNT(*) as count FROM Products';
         return $this->db->query($query)->fetch()->count;
-    }
-
-    public function getLowStockProducts($threshold = 10)
-    {
-        $query = '
-        SELECT 
-            p.product_id,
-            p.name,
-            p.price,
-            p.quantity,
-            c.name AS category
-        FROM Products p
-        LEFT JOIN Categories c ON p.category_id = c.category_id
-        WHERE p.quantity <= :threshold
-        ORDER BY p.quantity ASC';
-
-        return $this->db->query($query, ['threshold' => $threshold])->fetchAll();
     }
 }

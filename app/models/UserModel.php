@@ -10,7 +10,7 @@ class UserModel
 
     public function __construct()
     {
-        $config = require basePath('config/db.php');
+        $config = require basePath('config/_db.php');
         $this->db = Database::getInstance($config)->getConnection();
     }
 
@@ -49,13 +49,13 @@ class UserModel
         return $this->db->query($query)->fetch()->count;
     }
 
-    public function deleteUser($userId)
-    {
-        $this->db->query('DELETE FROM Cart WHERE user_id = :user_id', ['user_id' => $userId]);
-
-        $this->db->query('DELETE FROM Wishlist WHERE user_id = :user_id', ['user_id' => $userId]);
-
-        $query = 'DELETE FROM Users WHERE user_id = :user_id';
-        return $this->db->query($query, ['user_id' => $userId])->rowCount() > 0;
-    }
+//    public function deleteUser($userId)
+//    {
+//        $this->db->query('DELETE FROM Cart WHERE user_id = :user_id', ['user_id' => $userId]);
+//
+//        $this->db->query('DELETE FROM Wishlist WHERE user_id = :user_id', ['user_id' => $userId]);
+//
+//        $query = 'DELETE FROM Users WHERE user_id = :user_id';
+//        return $this->db->query($query, ['user_id' => $userId])->rowCount() > 0;
+//    }
 }

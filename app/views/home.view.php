@@ -3,7 +3,6 @@ loadPartial("head");
 loadPartial("navbar");
 ?>
 
-    <!--slider area start-->
     <?php loadPartial("success"); ?>
     <section class="slider_section d-flex align-items-center">
         <div class="slider_area owl-carousel">
@@ -67,9 +66,6 @@ loadPartial("navbar");
             </div>
         </div>
     </section>
-    <!--slider area end-->
-
-    <!--Tranding products-->
     <section class="pt-60 pb-30 gray-bg">
         <div class="container">
             <div class="row">
@@ -113,9 +109,7 @@ loadPartial("navbar");
                 <?php endforeach; ?>
             </div>
         </div>
-    </section><!--Tranding products-->
-
-    <!--Features area-->
+    </section>
     <section class="features-area pt-60 pb-60">
         <div class="container">
             <div class="row">
@@ -160,8 +154,7 @@ loadPartial("navbar");
                 </div>
             </div>
         </div>
-    </section><!--Features area-->
-    <!--Testimonials-->
+    </section>
     <section class="pb-60 pt-60 gray-bg">
         <div class="container">
             <div class="row justify-content-center">
@@ -212,96 +205,7 @@ loadPartial("navbar");
                 </div>
             </div>
         </div>
-    </section><!--/Testimonials-->
-
-    <!--Blog-->
-    <section class="pt-60">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="section-title">
-                        <h2>Blog Posts</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row blog_wrapper">
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <article class="single_blog mb-60">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog2.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">How to start drone</a></h3>
-                                <div class="blog_meta">
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date"><a href="#">Sep 20, 2019</a></span>
-                                </div>
-                                <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                        that it has a more-or-less</p>
-                                </div>
-                                <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
-                                </footer>
-                            </figcaption>
-                        </figure>
-                    </article>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <article class="single_blog blog_bidio mb-60">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog1.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">See the tutorial</a></h3>
-                                <div class="blog_meta">
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date">On : <a href="#">Aug 25, 2019</a></span>
-                                </div>
-                                <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                        that it has a more-or-less</p>
-                                </div>
-                                <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
-                                </footer>
-                            </figcaption>
-                        </figure>
-                    </article>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <article class="single_blog mb-60">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog-details.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <h3><a href="blog-details.html">How to start drone</a></h3>
-                                <div class="blog_meta">
-                                    <span class="author">Posted by : <a href="#">Rahul</a> / </span>
-                                    <span class="post_date"><a href="#">Sep 20, 2019</a></span>
-                                </div>
-                                <div class="blog_desc">
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                        that it has a more-or-less</p>
-                                </div>
-                                <footer class="readmore_button">
-                                    <a href="blog-details.html">read more</a>
-                                </footer>
-                            </figcaption>
-                        </figure>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section><!--/Blog-->
-
-    <!--shipping area start-->
+    </section>
     <section class="shipping_area">
         <div class="container">
             <div class=" row">
@@ -352,6 +256,5 @@ loadPartial("navbar");
             </div>
         </div>
     </section>
-    <!--shipping area end-->
 
 <?php loadPartial("footer"); ?>

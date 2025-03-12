@@ -104,7 +104,6 @@ class CartController
     {
         $product_id = $params['id'];
 
-        // Remove item from session cart.
         $cart = Session::get('cart') ?? [];
         foreach ($cart as $key => $item) {
             if ($item['product_id'] == $product_id) {
@@ -113,7 +112,6 @@ class CartController
         }
         Session::set('cart', $cart);
 
-        // If the user is logged in, remove from the database as well.
         if ($this->currentUser) {
             $this->cartModel->deleteFromCart([
                 'user_id' => $this->currentUser['id'],
@@ -127,11 +125,9 @@ class CartController
 
     public function edit()
     {
-// Gather and sanitize required fields from POST.
         $requiredFields = ['product_id', 'quantity'];
         $data = [];
         $errors = [];
-//        inspectAndDie(Session::get('cart'));
         foreach ($requiredFields as $field) {
             $data[$field] = isset($_POST[$field]) ? sanitize($_POST[$field]) : null;
         }
@@ -151,7 +147,6 @@ class CartController
         } else {
             // Update session cart.
             $cart = Session::get('cart') ?? [];
-            // Loop by reference so that changes update the array.
             foreach ($cart as &$item) {
                 if ($item['product_id'] == $data["product_id"]) {
                     $item['quantity'] = (int)$data["quantity"];
@@ -167,7 +162,6 @@ class CartController
                     'product_id' => $data['product_id'],
                     'quantity' => $data['quantity']
                 ]);
-//                $this->cartModel->mergeCart($this->currentUser['id']);
             }
             Flash::set(Flash::SUCCESS, 'Product quantity updated');
             redirect('/cart');

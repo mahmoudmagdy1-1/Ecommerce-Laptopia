@@ -5,11 +5,9 @@ loadPartial("head");
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-lg-2 bg-dark text-white p-3 min-vh-100">
-            <!-- Admin Sidebar -->
             <?php loadPartial("admin/sidebar"); ?>
         </div>
         <div class="col-12 col-lg-10 p-4">
-            <!-- Admin Content -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3">Add New Category</h1>
                 <div>
@@ -21,7 +19,6 @@ loadPartial("head");
 
 
             <?php loadPartial('errors'); ?>
-            <!-- Add Category Form -->
             <div class="card">
                 <div class="card-header bg-white">
                     <h5 class="mb-0">Category Information</h5>

@@ -46,7 +46,6 @@ loadPartial("navbar");
                                     <div class="single-acc-field">
                                         <button type="submit">Login Account</button>
                                     </div>
-<!--                                    <a href="forget-password.html">Forget Password?</a>-->
                                     <a href="/register">No Account Yet? Click here</a>
                                 </form>
                             </div>

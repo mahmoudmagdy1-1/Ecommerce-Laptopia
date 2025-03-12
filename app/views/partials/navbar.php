@@ -33,34 +33,8 @@
                             <li class="menu-item-has-children">
                                 <a href="/products">product</a>
                             </li>
-<!--                            <li class="menu-item-has-children">-->
-<!--                                <a href="#">pages </a>-->
-<!--                                <ul class="sub-menu">-->
-<!--                                    <li><a href="about.html">About Us</a></li>-->
-<!--                                    <li><a href="contact.html">contact</a></li>-->
-<!--                                    <li><a href="privacy-policy.html">privacy policy</a></li>-->
-<!--                                    <li><a href="faq.html">Frequently Questions</a></li>-->
-<!--                                    <li><a href="login.html">login</a></li>-->
-<!--                                    <li><a href="register.html">register</a></li>-->
-<!--                                    <li><a href="forget-password.html">Forget Password</a></li>-->
-<!--                                    <li><a href="404.html">Error 404</a></li>-->
-<!--                                    <li><a href="cart.html">cart</a></li>-->
-<!--                                    <li><a href="tracking.html">tracking</a></li>-->
-<!--                                    <li><a href="/checkout">checkout</a></li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
-                            <li class="menu-item-has-children">
-                                <a href="#">blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog.html">blog</a></li>
-                                    <li><a href="blog-details.html">blog details</a></li>
-                                </ul>
-                            </li>
                             <li class="menu-item-has-children">
                                 <a href="/login">my account</a>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="contact.html"> Contact Us</a>
                             </li>
                         </ul>
                     </div>
@@ -137,7 +111,6 @@
                                 <div class="mini_cart_wrapper">
                                     <?php if (!\Core\Session::has('user') || (\Core\Session::has('user') && \Core\Session::get('user')['role'] !== 'admin')):?>
                                     <a href="/cart"><img src="/assets/img/shopping-bag.png" alt=""></a>
-<!--                                    <span class="cart_quantity">2</span>-->
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -157,35 +130,12 @@
                                 <ul>
                                     <li><a href="/">home</a></li>
                                     <li><a href="/products">Products</a></li>
-
-<!--                                    <li><a class="active" href="#">pages <i class="fa fa-angle-down"></i></a>-->
-<!--                                        <ul class="sub_menu pages">-->
-<!--                                            <li><a href="about.html">About Us</a></li>-->
-<!--                                            <li><a href="contact.html">contact</a></li>-->
-<!--                                            <li><a href="privacy-policy.html">privacy policy</a></li>-->
-<!--                                            <li><a href="faq.html">Frequently Questions</a></li>-->
-<!--                                            <li><a href="login.html">login</a></li>-->
-<!--                                            <li><a href="register.html">register</a></li>-->
-<!--                                            <li><a href="forget-password.html">Forget Password</a></li>-->
-<!--                                            <li><a href="404.html">Error 404</a></li>-->
-<!--                                            <li><a href="cart.html">cart</a></li>-->
-<!--                                            <li><a href="tracking.html">tracking</a></li>-->
-<!--                                            <li><a href="/checkout">checkout</a></li>-->
-<!--                                        </ul>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>-->
-<!--                                        <ul class="sub_menu pages">-->
-<!--                                            <li><a href="blog.html">blog</a></li>-->
-<!--                                            <li><a href="blog-details.html">blog details</a></li>-->
-<!--                                        </ul>-->
-<!--                                    </li>-->
                                         <?php
                                             if(\Core\Session::has('user') && \Core\Session::get('user')['role'] == 'admin'):
                                         ?>
                                     <li><a href="/admin">Admin Dashboard</a></li>
                                     <?php else: ?>
                                     <li><a href="/orders"> Orders</a></li>
-                                    <li><a href="/contact"> Contact Us</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </nav>

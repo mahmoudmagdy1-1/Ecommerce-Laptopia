@@ -10,7 +10,7 @@ class CartModel
 
     public function __construct()
     {
-        $config = require basePath('config/db.php');
+        $config = require basePath('config/_db.php');
         $this->db = Database::getInstance($config)->getConnection();
     }
 
@@ -60,16 +60,12 @@ class CartModel
 
     public function mergeCart($userId)
     {
-        // Get the cart ID
         $cartId = $this->getCartId($userId);
 
-        // Get the cart items from the database
         $dbCart = $this->getCartItems($cartId);
 
-        // Get the cart items from the session
         $sessionCart = \Core\Session::get('cart') ?? [];
 
-        // Merge the cart items
         $mergedCart = [];
 
         foreach ($dbCart as $item) {
@@ -86,7 +82,6 @@ class CartModel
             }
         }
 
-        // Update the cart items in the database
         foreach ($mergedCart as $productID => $qty) {
             $newCart = [
                 'user_id' => $userId,

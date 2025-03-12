@@ -10,7 +10,7 @@ class OrderModel
 
     public function __construct()
     {
-        $config = require basePath('config/db.php');
+        $config = require basePath('config/_db.php');
         $this->db = Database::getInstance($config)->getConnection();
     }
 

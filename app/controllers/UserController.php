@@ -43,7 +43,6 @@ class UserController
 
     public function store($params)
     {
-        // Define required fields for user creation
         $requiredFields = [
             'name',
             'phone',
@@ -51,30 +50,25 @@ class UserController
             'password'
         ];
 
-        // Initialize data and errors arrays
         $data = [];
         $errors = [];
 
-        // Process POST data
         foreach ($_POST as $key => $value) {
             if (in_array($key, $requiredFields)) {
                 $data[$key] = sanitize($value);
             }
         }
 
-        // Validation checks for each required field
         foreach ($requiredFields as $field) {
             if (!isset($data[$field]) || !strlen($data[$field]) || !Validation::string($data[$field])) {
                 $errors[$field] = ucfirst($field) . ' is required';
             }
         }
 
-        // Validate phone number (example: check for valid phone number format)
         if (!Validation::string($data['phone'], 0, 11)) {
             $errors['phone'] = 'Phone number is invalid';
         }
 
-        // Validate email format
         if (!Validation::email($data['email'])) {
             $errors['email'] = 'Email is invalid';
         }
@@ -83,17 +77,14 @@ class UserController
             $errors['email'] = 'Email already exists';
         }
 
-        // Password validation (optional: enforce strength checks)
         if (!Validation::string($data['password'], 6, 255)) {
             $errors['password'] = 'Password must be at least 6 characters';
         }
 
-        // Hash the password for storage
         if (empty($errors) && isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
 
-        // If there are errors, show the form again with error messages
         if (!empty($errors)) {
             foreach ($errors as $error => $message) {
                 Flash::set(Flash::ERROR, $message);

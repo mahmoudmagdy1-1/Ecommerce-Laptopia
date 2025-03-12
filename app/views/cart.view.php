@@ -142,8 +142,6 @@ loadPartial("success");
 <!--shopping cart area end -->
 
 <script>
-    // Optional: Handle the input change if you want to update the quantity dynamically.
-    // Otherwise, the form submission with the quantity input works when the user clicks 'Update'.
 </script>
 
 <?php loadPartial("footer"); ?>

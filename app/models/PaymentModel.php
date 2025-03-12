@@ -8,7 +8,7 @@ class PaymentModel
 {
     public function __construct()
     {
-        $config = require basePath('config/db.php');
+        $config = require basePath('config/_db.php');
         $this->db = Database::getInstance($config)->getConnection();
     }
 
@@ -22,5 +22,11 @@ class PaymentModel
     {
         $query = 'SELECT * FROM Payments WHERE order_id = :order_id';
         return $this->db->query($query, ['order_id' => $orderID])->fetch();
+    }
+
+    public function updateStatus($data)
+    {
+        $query = 'UPDATE Payments SET status = :status WHERE order_id = :order_id';
+        return $this->db->query($query, $data)->rowCount() > 0;
     }
 }

@@ -45,21 +45,19 @@ $router->post('/admin/users/delete/{id}', 'AdminController@deleteUser', ['admin'
 $router->get('/admin/products', 'AdminController@products', ['admin']);
 $router->get('/admin/products/add', 'AdminController@addProduct', ['admin']);
 $router->post('/admin/products/add', 'AdminController@createProduct', ['admin']);
-//$router->get('/admin/products/edit/{id}', 'AdminController@editProduct', ['admin']);
-//$router->post('/admin/products/edit/{id}', 'AdminController@updateProduct', ['admin']);
 //$router->delete('/admin/products/delete/{id}', 'AdminController@deleteProduct', ['admin']);
 
 // Admin Orders Management
 $router->get('/admin/orders', 'AdminController@orders', ['admin']);
 $router->get('/admin/orders/{id}', 'AdminController@orderDetails', ['admin']);
-$router->post('/admin/orders/{id}/status', 'AdminController@updateOrderStatus', ['admin']);
+$router->post('/admin/orders/status/{id}', 'AdminController@updateOrderStatus', ['admin']);
 
 // Admin Categories Management
-$router->get('/admin/categories', 'AdminController@categories', ['admin']);
-$router->get('/admin/categories/add', 'AdminController@addCategory', ['admin']);
-$router->post('/admin/categories/add', 'AdminController@createCategory', ['admin']);
-$router->get('/admin/categories/edit/{id}', 'AdminController@editCategory', ['admin']);
-$router->post('/admin/categories/edit/{id}', 'AdminController@updateCategory', ['admin']);
-$router->delete('/admin/categories/delete/{id}', 'AdminController@deleteCategory', ['admin']);
+$router->get('/admin/categories', 'CategoryController@index', ['admin']);
+$router->get('/admin/categories/add', 'CategoryController@addCategory', ['admin']);
+$router->post('/admin/categories/add', 'CategoryController@createCategory', ['admin']);
+$router->get('/admin/categories/edit/{id}', 'CategoryController@editCategory', ['admin']);
+$router->post('/admin/categories/edit/{id}', 'CategoryController@updateCategory', ['admin']);
+//$router->delete('/admin/categories/delete/{id}', 'AdminController@deleteCategory', ['admin']);
 
 $router->get('/404', 'ErrorController@notFound');

@@ -74,16 +74,10 @@ class Router
                         break;
                     }
                 }
-                // If a match was found, process middleware and dispatch the controller
                 if ($matched) {
-//                    inspectAndDie(Session::get('user'));
-//                    inspectAndDie($route['middleware']);
                     if (isset($route['middleware']) && is_array($route['middleware'])) {
                             (new Authorize())->handle($route['middleware']);
                     }
-//                    foreach(get_declared_classes() as $name){
-//                        inspect($name);
-//                    }
                     $controllerClass = 'App\\controllers\\' . $route['controller'];
                     $controllerMethod = $route['controllerMethod'];
                     $controllerInstance = new $controllerClass();

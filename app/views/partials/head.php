@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
 
-<!--   03:20:39 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -9,11 +8,7 @@
     <title>Laptopia</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
-
-    <!-- CSS
-    ========================= -->
 
 
     <!-- Plugins CSS -->

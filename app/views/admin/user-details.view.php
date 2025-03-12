@@ -6,11 +6,9 @@ loadPartial("head");
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-lg-2 bg-dark text-white p-3 min-vh-100">
-            <!-- Admin Sidebar -->
             <?php loadPartial("admin/sidebar"); ?>
         </div>
         <div class="col-12 col-lg-10 p-4">
-            <!-- Admin Content -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3">User Details</h1>
                 <div>
@@ -22,7 +20,6 @@ loadPartial("head");
 
             <?php loadPartial('errors'); ?>
 
-            <!-- User Information -->
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="card">
@@ -81,7 +78,6 @@ loadPartial("head");
                 </div>
             </div>
 
-            <!-- User Orders -->
             <div class="card">
                 <div class="card-header bg-white">
                     <h5 class="mb-0">Order History</h5>

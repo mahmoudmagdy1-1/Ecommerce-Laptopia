@@ -3,7 +3,7 @@ loadPartial("head");
 loadPartial("navbar");
 ?>
 
-<!--breadcrumbs area start-->
+
 <div class="breadcrumbs_area">
     <div class="container">
         <div class="row">
@@ -18,10 +18,7 @@ loadPartial("navbar");
         </div>
     </div>
 </div>
-<!--breadcrumbs area end-->
 
-
-<!--error section area start-->
 <div class="error_section">
     <div class="container">
         <div class="row">
@@ -36,6 +33,5 @@ loadPartial("navbar");
         </div>
     </div>
 </div>
-<!--error section area end-->
 
 <?php loadPartial("footer"); ?>

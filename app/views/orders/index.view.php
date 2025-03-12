@@ -8,14 +8,12 @@ loadPartial("navbar");
     <?php
     loadPartial("errors");
     ?>
-    <!-- Page Header -->
     <div class="card order-card mb-4">
         <div class="card-header bg-primary text-white">
             <h2 class="mb-0">All Orders</h2>
         </div>
     </div>
 
-    <!-- Orders Table -->
     <?php ?>
     <div class="card order-card mb-4">
         <div class="card-header">

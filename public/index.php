@@ -4,7 +4,6 @@ require "../vendor/autoload.php";
 
 use Core\Session;
 Session::start();
-//inspectAndDie(Session::get('cart'));
 
 use Core\Router;
 $router = new Router();

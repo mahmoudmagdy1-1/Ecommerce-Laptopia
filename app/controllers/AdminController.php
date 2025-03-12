@@ -6,9 +6,10 @@ use App\models\UserModel;
 use App\models\ProductModel;
 use App\models\OrderModel;
 use App\models\CategoryModel;
+use App\models\ShippingModel;
+use App\models\PaymentModel;
 use Core\Session;
 use Core\Flash;
-use Core\Validation;
 
 class AdminController
 {
@@ -17,6 +18,8 @@ class AdminController
     protected $orderModel;
     protected $categoryModel;
     protected $currentAdmin;
+    protected $shippingModel;
+    protected $paymentModel;
 
     public function __construct()
     {
@@ -24,10 +27,9 @@ class AdminController
         $this->productModel = new ProductModel();
         $this->orderModel = new OrderModel();
         $this->categoryModel = new CategoryModel();
-
+        $this->shippingModel = new ShippingModel();
+        $this->paymentModel = new PaymentModel();
         $this->currentAdmin = Session::get('user');
-        // inspectAndDie($this->currentAdmin);
-        // Ensure only admins can access these pages
         if ($this->currentAdmin['role'] !== 'admin') {
             redirect('/login');
         }
@@ -79,17 +81,17 @@ class AdminController
         ]);
     }
 
-    public function deleteUser($params)
-    {
-        $userId = $params['id'];
-        if ($this->userModel->deleteUser($userId)) {
-            Flash::set(Flash::SUCCESS, 'User deleted successfully');
-            redirect('/admin/users');
-        } else {
-            Flash::set(Flash::ERROR, 'Failed to delete user');
-            redirect('/admin/users');
-        }
-    }
+//    public function deleteUser($params)
+//    {
+//        $userId = $params['id'];
+//        if ($this->userModel->deleteUser($userId)) {
+//            Flash::set(Flash::SUCCESS, 'User deleted successfully');
+//            redirect('/admin/users');
+//        } else {
+//            Flash::set(Flash::ERROR, 'Failed to delete user');
+//            redirect('/admin/users');
+//        }
+//    }
 
     // Products Management
     public function products()
@@ -147,7 +149,6 @@ class AdminController
             $errors['description'] = 'Description is required';
         }
 
-        // Handle image upload
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = 'public/assets/img/products/';
             $fileName = time() . '_' . basename($_FILES['image']['name']);
@@ -263,20 +264,19 @@ class AdminController
         }
     }
 
-    public function deleteProduct($params)
-    {
-        $product_id = $params['id'];
-        if(!$this->productModel->getProductById($product_id)){
-            Flash::set(Flash::ERROR, 'Product not found');
-            redirect('/admin/products');
-        }
-        else {
-            $this->productModel->deleteProduct($product_id);
-            $this->productModel->deleteProductImages($product_id);
-            Flash::set(Flash::SUCCESS, 'Product deleted successfully');
-            redirect('/admin/products');
-        }
-    }
+//    public function deleteProduct($params)
+//    {
+//        $product_id = $params['id'];
+//        if (!$this->productModel->getProductById($product_id)) {
+//            Flash::set(Flash::ERROR, 'Product not found');
+//            redirect('/admin/products');
+//        } else {
+//            $this->productModel->deleteProduct($product_id);
+//            $this->productModel->deleteProductImages($product_id);
+//            Flash::set(Flash::SUCCESS, 'Product deleted successfully');
+//            redirect('/admin/products');
+//        }
+//    }
 
 
     // Orders Management
@@ -327,110 +327,24 @@ class AdminController
     public function updateOrderStatus($params)
     {
         $orderId = $params['id'];
-        $status = $_POST['status'] ?? '';
+        $shipping_status = $_POST['shipping_status'] ?? '';
+        $payment_status = $_POST['payment_status'] ?? '';
 
-        if (empty($status)) {
-            Flash::set(Flash::ERROR, 'Status is required');
-            redirect("/admin/orders/{$orderId}");
-        }
+        $validShippingStatuses = ['Pending', 'Shipped', 'Delivered', 'Returned', 'Cancelled'];
+        $validPaymentStatuses = ['Pending', 'Success', 'Failed'];
 
-        $success = $this->orderModel->updateOrderStatus($orderId, $status);
-
-        if ($success) {
-            Flash::set(Flash::SUCCESS, 'Order status updated successfully');
+        if ($shipping_status && in_array($shipping_status, $validShippingStatuses)) {
+            $this->shippingModel->updateShippingStatus(['order_id' => $orderId, 'status' => $shipping_status]);
+            Flash::set(Flash::SUCCESS, 'Shipping status updated successfully');
+        } elseif ($payment_status && in_array($payment_status, $validPaymentStatuses)) {
+            $this->paymentModel->updateStatus(['order_id' => $orderId, 'status' => $payment_status]);
+            Flash::set(Flash::SUCCESS, 'Payment status updated successfully');
         } else {
-            Flash::set(Flash::ERROR, 'Failed to update order status');
+            Flash::set(Flash::ERROR, 'Invalid status');
         }
 
         redirect("/admin/orders/{$orderId}");
     }
 
-    // Categories Management
-    public function categories()
-    {
-        $categories = $this->categoryModel->getAllCategories();
 
-        loadView('admin/categories', [
-            'categories' => $categories,
-            'currentAdmin' => $this->currentAdmin
-        ]);
-    }
-
-    public function addCategory()
-    {
-        loadView('categories/add-category', [
-            'currentAdmin' => $this->currentAdmin
-        ]);
-    }
-
-    public function createCategory()
-    {
-        $name = sanitize($_POST['name'] ?? '');
-
-        if (empty($name)) {
-            Flash::set(Flash::ERROR, 'Category name is required');
-            redirect('/admin/categories/add');
-        }
-
-        $categoryId = $this->categoryModel->createCategory(['name' => $name]);
-
-        if ($categoryId) {
-            Flash::set(Flash::SUCCESS, 'Category added successfully');
-            redirect('/admin/categories');
-        } else {
-            Flash::set(Flash::ERROR, 'Failed to add category');
-            redirect('/admin/categories/add');
-        }
-    }
-
-    public function editCategory($params)
-    {
-        $categoryId = $params['id'];
-        $category = $this->categoryModel->getCategoryById($categoryId);
-
-        if (!$category) {
-            Flash::set(Flash::ERROR, 'Category not found');
-            redirect('/categories/categories');
-        }
-
-        loadView('categories/edit-category', [
-            'category' => $category,
-            'currentAdmin' => $this->currentAdmin
-        ]);
-    }
-
-    public function updateCategory($params)
-    {
-        $categoryId = $params['id'];
-        $name = sanitize($_POST['name'] ?? '');
-
-        if (empty($name)) {
-            Flash::set(Flash::ERROR, 'Category name is required');
-            redirect("/admin/categories/edit/{$categoryId}");
-        }
-
-        $success = $this->categoryModel->updateCategory($categoryId, ['name' => $name]);
-
-        if ($success) {
-            Flash::set(Flash::SUCCESS, 'Category updated successfully');
-            redirect('/admin/categories');
-        } else {
-            Flash::set(Flash::ERROR, 'Failed to update category');
-            redirect("/admin/categories/edit/{$categoryId}");
-        }
-    }
-
-    public function deleteCategory($params)
-    {
-        $categoryId = $params['id'];
-        $success = $this->categoryModel->deleteCategory($categoryId);
-
-        if ($success) {
-            Flash::set(Flash::SUCCESS, 'Category deleted successfully');
-        } else {
-            Flash::set(Flash::ERROR, 'Failed to delete category');
-        }
-
-        redirect('/admin/categories');
-    }
 }

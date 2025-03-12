@@ -13,14 +13,9 @@ loadPartial("navbar");
             </div>
         </div>
         <div class="row justify-content-center">
-            <!--                --><?php //= inspect(); ?>
-            <!--                --><?php //inspectAndDie($products); ?>
             <?php foreach ($products as $product): ?>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="single-tranding">
-                        <!--                        --><?php //= inspectAndDie($products) ?>
-                        <!--                        <form action="/products/-->
-                        <?php //= $products->product_id; ?><!--"></form>-->
                         <a href="/product/<?= $product->product_id; ?>">
                             <div class="tranding-pro-img">
                                 <img src="/assets/img/product/<?= explode(",", $product->images)[0] ?>"

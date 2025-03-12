@@ -94,18 +94,6 @@ loadPartial("success");
                     <div class="product_meta">
                         <span>Category: <a href="#"><?= $product->category ?></a></span>
                     </div>
-
-
-                    <?php
-                    if (\Core\Session::has('user') && \Core\Session::get('user')['role'] == 'admin'):
-                        ?>
-
-                            <div class="product_variant quantity">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button class="button" type="submit">Delete Product</button>
-                            </div>
-                        </form>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -132,7 +120,6 @@ loadPartial("success");
 
                             <div class="tab-pane fade show active" id="reviews" role="tabpanel">
                                 <div class="reviews_wrapper">
-                                    <!--                                    <h2>1 review for Donec eu furniture</h2>-->
                                     <div class="reviews_comment_box">
                                         <div class="comment_thmb">
                                             <img src="assets/img/blog/comment2" alt="">

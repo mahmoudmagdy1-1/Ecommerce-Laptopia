@@ -9,11 +9,9 @@ loadPartial("head");
     ?>
     <div class="row">
         <div class="col-12 col-lg-2 bg-dark text-white p-3 min-vh-100">
-            <!-- Admin Sidebar -->
             <?php loadPartial("admin/sidebar"); ?>
         </div>
         <div class="col-12 col-lg-10 p-4">
-            <!-- Admin Content -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3">Category Management</h1>
                 <div>
@@ -25,7 +23,6 @@ loadPartial("head");
 
             <?php loadPartial('errors'); ?>
 
-            <!-- Categories Table -->
             <div class="card">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">All Categories</h5>
@@ -43,7 +40,6 @@ loadPartial("head");
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Products</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -58,21 +54,10 @@ loadPartial("head");
                                         <td>#<?= $category->category_id ?></td>
                                         <td><?= $category->name ?></td>
                                         <td>
-                                            <?php
-                                            // This would need to be implemented in the controller
-                                            $productCount = 0; // Placeholder
-                                            ?>
-                                            <span class="badge bg-info"><?= $productCount ?></span>
-                                        </td>
-                                        <td>
                                             <a href="/admin/categories/edit/<?= $category->category_id ?>"
                                                class="btn btn-sm btn-primary">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <!--                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-->
-                                            <?php //= $category->category_id ?><!--">-->
-                                            <!--                                                    <i class="fas fa-trash"></i> Delete-->
-                                            <!--                                                </button>-->
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -87,7 +72,6 @@ loadPartial("head");
 </div>
 
 <script>
-    // Simple client-side search functionality
     document.getElementById('categorySearch').addEventListener('keyup', function () {
         const searchValue = this.value.toLowerCase();
         const tableRows = document.querySelectorAll('tbody tr');

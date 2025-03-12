@@ -58,12 +58,6 @@ class OrderController
             'currentUser' => $this->currentUser
         ]);
     }
-
-    //    public function show()
-    //    {
-    //        loadView('orders/show');
-    //    }
-
     public function checkout()
     {
         $cartID = $this->cartModel->getCartID($this->currentUser['id']);
@@ -93,7 +87,6 @@ class OrderController
 
     public function order()
     {
-//                inspectAndDie($_POST);
         $requiredFields = [
             'address',
             'city',

@@ -5,11 +5,9 @@ loadPartial("head");
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-lg-2 bg-dark text-white p-3 min-vh-100">
-            <!-- Admin Sidebar -->
             <?php loadPartial("admin/sidebar"); ?>
         </div>
         <div class="col-12 col-lg-10 p-4">
-            <!-- Admin Content -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3">Order Details #<?= $order->order_id ?></h1>
                 <div>
@@ -20,6 +18,7 @@ loadPartial("head");
             </div>
 
             <?php loadPartial('errors'); ?>
+            <?php loadPartial('success'); ?>
 
             <!-- Order Status -->
             <div class="card mb-4">
@@ -36,7 +35,6 @@ loadPartial("head");
                 </div>
             </div>
 
-            <!-- Customer Information -->
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="card h-100">
@@ -65,7 +63,7 @@ loadPartial("head");
                                 <p><strong>City:</strong> <?= $shipping->city ?></p>
                                 <p>
                                     <strong>Shipping Status:</strong>
-                                <form action="">
+                                <form action="/admin/orders/status/<?= $order->order_id ?>" method="POST">
                                     <select name="shipping_status" class="form-select mb-2">
                                         <option value="Pending" <?= $shipping->status === 'Pending' ? 'selected' : '' ?>>
                                             Pending
@@ -75,6 +73,12 @@ loadPartial("head");
                                         </option>
                                         <option value="Delivered" <?= $shipping->status === 'Delivered' ? 'selected' : '' ?>>
                                             Delivered
+                                        </option>
+                                        <option value="Returned" <?= $shipping->status === 'Returned' ? 'selected' : '' ?>>
+                                            Returned
+                                        </option>
+                                        <option value="Cancelled" <?= $shipping->status === 'Cancelled' ? 'selected' : '' ?>>
+                                            Cancelled
                                         </option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Update Shipping Status</button>
@@ -91,7 +95,6 @@ loadPartial("head");
                 </div>
             </div>
 
-            <!-- Payment Information -->
             <div class="card mb-4">
                 <div class="card-header bg-white">
                     <h5 class="mb-0">Payment Information</h5>
@@ -108,7 +111,7 @@ loadPartial("head");
                             <div class="col-md-6">
                                 <p>
                                     <strong>Payment Status:</strong>
-                                <form action="/admin/orders/<?= $order->order_id ?>/payment-status" method="POST">
+                                <form action="/admin/orders/status/<?= $order->order_id ?>" method="POST">
                                     <select name="payment_status" class="form-select mb-2">
                                         <option value="Pending" <?= $payment->status === 'Pending' ? 'selected' : '' ?>>
                                             Pending
@@ -116,8 +119,8 @@ loadPartial("head");
                                         <option value="Failed" <?= $payment->status === 'Failed' ? 'selected' : '' ?>>
                                             Failed
                                         </option>
-                                        <option value="Paid" <?= $payment->status === 'Paid' ? 'selected' : '' ?>>
-                                            Paid
+                                        <option value="Success" <?= $payment->status === 'Success' ? 'selected' : '' ?>>
+                                            Success
                                         </option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Update Payment Status</button>
@@ -131,7 +134,6 @@ loadPartial("head");
                 </div>
             </div>
 
-            <!-- Order Items -->
             <div class="card">
                 <div class="card-header bg-white">
                     <h5 class="mb-0">Order Items</h5>
@@ -150,7 +152,6 @@ loadPartial("head");
                             <tbody>
                             <?php
                             $subtotal = 0;
-//                            inspectAndDie($products);
                             if (!empty($products)):
                                 foreach ($products as $product):
                                     $subtotal += $product['total'];

@@ -3,7 +3,6 @@ loadPartial("head");
 loadPartial("navbar");
 ?>
     <div class="container order-container py-5">
-        <!-- Order Header -->
         <div class="card order-card mb-4">
             <div class="card-header bg-primary text-white">
                 <h2 class="mb-0">Order #<?php echo $orderID; ?></h2>
@@ -57,7 +56,6 @@ loadPartial("navbar");
             </div>
         </div>
 
-        <!-- Shipping and Payment Info -->
         <div class="row">
             <div class="col-md-6">
                 <div class="card order-card mb-4">
@@ -111,7 +109,6 @@ loadPartial("navbar");
             </div>
         </div>
 
-        <!-- Order Total -->
         <div class="card order-card">
             <div class="card-body text-end">
                 <h5 class="section-header">Order Total</h5>
@@ -122,7 +119,6 @@ loadPartial("navbar");
             </div>
         </div>
 
-        <!-- Back Button -->
         <div class="mt-4">
             <a href="/orders" class="btn btn-secondary">Back to Orders</a>
         </div>

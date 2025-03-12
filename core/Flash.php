@@ -21,8 +21,6 @@ class Flash
     public static function display($key)
     {
         $messages = Session::get($key);
-//        Session::destroy();
-//        inspectAndDie($messages);
         if ($messages) {
             $class = ($key == self::SUCCESS) ? 'alert-success' : 'alert-danger';
             foreach ($messages as $message) {

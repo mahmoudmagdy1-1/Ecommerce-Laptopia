@@ -2,8 +2,6 @@
 
 namespace App\controllers;
 
-use Core\Database;
-use Core\Session;
 use Core\Validation;
 use Core\Flash;
 use App\models\ProductModel;
@@ -11,13 +9,10 @@ use App\models\CategoryModel;
 
 class ProductController
 {
-    protected $db;
     protected $productModel;
 
     public function __construct()
     {
-//        $config = require basePath('config/db.php');
-//        $this->db = Database::getInstance($config)->getConnection();
         $this->productModel = new ProductModel();
     }
 
@@ -82,10 +77,8 @@ class ProductController
 
     public function processProductData($params)
     {
-        // If editing, use the product ID from the params, otherwise it's a new product
         $product_id = isset($params['id']) ?? $params['id'];
 
-        // Define required fields
         $requiredFields = [
             'name',
             'description',
@@ -95,19 +88,16 @@ class ProductController
             'category'
         ];
 
-        // Initialize data and errors arrays
         $data = [];
         $errors = [];
         $images = [];
 
-        // Process POST data
         foreach ($_POST as $key => $value) {
             if (in_array($key, $requiredFields)) {
                 $data[$key] = sanitize($value);
             }
         }
 
-        // Validation checks for each required field
         foreach ($requiredFields as $field) {
             if (!strlen($data[$field]) || !Validation::string($data[$field])) {
                 $errors[$field] = ucfirst($field) . ' is required';
@@ -160,7 +150,6 @@ class ProductController
 
     public function create($params)
     {
-        // Call the shared method to process the product data
         $result = $this->processProductData($params);
         $data = $result['data'];
         $errors = $result['errors'];
@@ -171,7 +160,6 @@ class ProductController
             }
             redirect("/product/add");
         } else {
-            // Create the product and associate the images
             $this->productModel->createProduct($data, $images);
             $new_id = $this->productModel->getLastProductId();
 
@@ -184,7 +172,6 @@ class ProductController
                 ]);
             }
 
-            // Redirect to the newly created product page
             redirect("/product/$new_id");
         }
     }
@@ -193,22 +180,17 @@ class ProductController
     public function update($params)
     {
         $product_id = $params['id'];
-
-        // Fetch the existing product data by ID
         $product = $this->productModel->getProductById($product_id);
 
-        // If product doesn't exist, return an error (optional)
         if (!$product) {
             ErrorController::notFound("Product not found");
         }
 
-        // Call the shared method to process the product data
         $result = $this->processProductData(['id' => $product_id]);
         $data = $result['data'];
         $errors = $result['errors'];
         $images = $result['images'];
 
-        // If there are errors, show the form again with error messages
         if (!empty($errors)) {
             loadView('products/edit', [
                 'errors' => $errors,
@@ -216,15 +198,11 @@ class ProductController
                 'product' => $product
             ]);
         } else {
-            // Update the product with the new data
-            $this->productModel->updateProduct($product_id, $data);
-
-            // Handle image updates (if new images were uploaded)
+            $data['product_id'] =  $product_id;
+            $this->productModel->updateProduct($data);
             if (!empty($images)) {
-                // Delete old images or handle image update logic
                 $this->productModel->deleteProductImages($product_id);
 
-                // Add the new images
                 foreach ($images as $image) {
                     $this->productModel->addProductImage([
                         'product_id' => $product_id,
@@ -234,7 +212,6 @@ class ProductController
                 }
             }
 
-            // Redirect to the updated product page
             redirect("/product/$product_id");
         }
     }
