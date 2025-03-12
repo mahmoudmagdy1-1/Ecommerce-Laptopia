@@ -129,7 +129,8 @@ class ProductController
                     $type = $_FILES["images"]["type"][$key];
                     if (in_array($type, $allowed_types)) {
                         $images[] = $name;
-                        move_uploaded_file($tmp_name, basePath("public/assets/img/product/$name"));
+                        inspectAndDie(move_uploaded_file($tmp_name, basePath("public/assets/img/product/$name")));
+
                     } else {
                         $errors["image"] = "Only png, jpeg and webp images are allowed";
                     }

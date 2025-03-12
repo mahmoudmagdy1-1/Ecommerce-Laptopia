@@ -78,6 +78,7 @@ loadPartial("success");
                         </ul>
                         <p><?= $product->description ?></p>
                     </div>
+                    <?php if(!\Core\Session::has('user') || (\Core\Session::has('user') && \Core\Session::get('user')['role'] !== 'admin')): ?>
                     <form method="post" action="/cart/add">
                         <div class="product_variant quantity">
                             <label>quantity</label>
@@ -86,11 +87,7 @@ loadPartial("success");
                             <button class="button" type="submit">add to cart</button>
                         </div>
                     </form>
-                    <div class=" product_d_action">
-                        <ul>
-                            <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                        </ul>
-                    </div>
+                    <?php endif; ?>
                     <div class="product_meta">
                         <span>Category: <a href="#"><?= $product->category ?></a></span>
                     </div>
@@ -111,7 +108,7 @@ loadPartial("success");
                             <ul class="nav" role="tablist">
                                 <li>
                                     <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
-                                       aria-selected="false">Reviews (1)</a>
+                                       aria-selected="false">Reviews (0)</a>
                                 </li>
                             </ul>
                         </div>
@@ -124,36 +121,10 @@ loadPartial("success");
                                         <div class="comment_thmb">
                                             <img src="assets/img/blog/comment2" alt="">
                                         </div>
-                                        <div class="comment_text">
-                                            <div class="reviews_meta">
-                                                <div class="star_rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                                <p><strong>admin </strong>- September 12, 2018</p>
-                                                <span>roadthemes</span>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <div class="comment_title">
                                         <h2>Add a review </h2>
                                         <p>Your email address will not be published. Required fields are marked </p>
-                                    </div>
-                                    <div class="product_ratting mb-10">
-                                        <h3>Your rating</h3>
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                        </ul>
                                     </div>
                                     <div class="product_review_form">
                                         <form action="#">

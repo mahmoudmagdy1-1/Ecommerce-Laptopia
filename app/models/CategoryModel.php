@@ -29,8 +29,7 @@ class CategoryModel
     public function createCategory($data)
     {
         $query = 'INSERT INTO Categories (name) VALUES (:name)';
-        $this->db->query($query, ['name' => $data['name']]);
-        return $this->db->lastInsertId();
+        return $this->db->query($query, ['name' => $data['name']])->rowCount() > 0;
     }
 
     public function updateCategory($categoryId, $data)

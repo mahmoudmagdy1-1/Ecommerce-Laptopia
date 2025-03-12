@@ -26,8 +26,8 @@ A custom PHP e-commerce platform built from scratch with a Laravel-like architec
 1. Clone the repo into your document root (www, htdocs, etc)
 2. Create a database called `ecomm`
 3. Import the `db.sql` file into your database
-4. Rename `config/_db.php` to `config/db.php` and update with your credentials
-5. Run `composer install` to set up the autoloading
+4. Update the environment file with your database credentials at `config/_db.php`
+5. Run the command `composer install` to set up the autoloading
 6. Set your document root to the `public` directory
 
 ### Setting the Document Root

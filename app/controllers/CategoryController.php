@@ -32,7 +32,7 @@ class CategoryController
 
         if (empty($name)) {
             Flash::set(Flash::ERROR, 'Category name is required');
-            redirect('/admin/categories/add');
+            redirect('/admin/categories/');
         }
 
         $categoryId = $this->categoryModel->createCategory(['name' => $name]);
